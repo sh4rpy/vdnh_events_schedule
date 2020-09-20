@@ -88,6 +88,7 @@ def show_help_text(message):
 
 @bot.message_handler(commands=['today'])
 def show_today_events(message):
+    """Показывает сегодняшние мероприятия"""
     today = datetime.today().strftime('%Y.%m.%d')
     try:
         bot.send_message(message.chat.id, parse_events(get_html(today)), parse_mode='html')
@@ -97,7 +98,7 @@ def show_today_events(message):
 
 @bot.message_handler(content_types=['text'])
 def show_events_by_date(message):
-    """Формирует ответ пользователю"""
+    """Формирует ответ пользователю с мероприятиями"""
     if re.search(RE_DATE, message.text) or re.search(RE_DATES_RANGE, message.text):
         try:
             bot.send_message(message.chat.id, parse_events(get_html(message.text)), parse_mode='html')
