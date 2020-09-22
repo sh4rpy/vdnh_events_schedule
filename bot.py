@@ -12,7 +12,7 @@ from telebot.apihelper import ApiTelegramException
 load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 bot = telebot.TeleBot(TELEGRAM_TOKEN, parse_mode=None)
-EDUCATION_PROGRAM_URL = 'http://znanie.vdnh.ru/?dates={}'
+EDUCATION_PROGRAM_URL = 'http://znanie.vdnh.ru/?PAGEN_1=2&compid=02462111750a8ac7a028041e194637e6&dates={}'
 RE_DATE = r'^20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])$'
 RE_DATES_RANGE = r'^20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])-' \
                  r'20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])$'
@@ -49,6 +49,7 @@ def parse_events(response):
             'title': event.find('div', class_='title').text.strip(),
             'date': event.find('div', class_='fulldate').find_all('div')[0].text.strip(),
             'time': event.find('div', class_='fulldate').find_all('div')[1].text.strip(),
+            'type': event.find('div', class_='media').find('div').find('div').text.strip(),
         })
     # проходимся по элементам
     for event in events:
@@ -61,7 +62,7 @@ def parse_events(response):
         ):
             # и добавляем элемент в ответ
             answer += f'<b>Площадка:</b>\n{event["place"]}\n' \
-                      f'<b>Описание:</b>\n{event["title"]}\n' \
+                      f'<b>Описание:</b>\n{event["type"]}: {event["title"]}\n' \
                       f'<b>Дата:</b>\n{event["date"]}\n' \
                       f'<b>Время начала:</b>\n{event["time"]}\n\n'
     return answer
