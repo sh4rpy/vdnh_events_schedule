@@ -49,7 +49,7 @@ def parse_events(response):
             'title': event.find('div', class_='title').get_text(strip=True),
             'date': event.find('div', class_='fulldate').find_all('div')[0].get_text(strip=True),
             'time': event.find('div', class_='fulldate').find_all('div')[1].get_text(strip=True),
-            'type': event.find('div', class_='media').find('div').div.get_text(strip=True),
+            'type': event.find('div', class_='event_type').get_text(strip=True),
         })
     # проходимся по элементам
     for event in events:
