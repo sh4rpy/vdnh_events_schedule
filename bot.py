@@ -45,11 +45,11 @@ def parse_events(response):
     # выбираем нужные элементы на странице
     for event in event_items:
         events.append({
-            'place': event.find('div', class_='place').text.lstrip(),
-            'title': event.find('div', class_='title').text.strip(),
-            'date': event.find('div', class_='fulldate').find_all('div')[0].text.strip(),
-            'time': event.find('div', class_='fulldate').find_all('div')[1].text.strip(),
-            'type': event.find('div', class_='media').find('div').find('div').text.strip(),
+            'place': event.find('div', class_='place').get_text.lstrip(),
+            'title': event.find('div', class_='title').get_text.strip(),
+            'date': event.find('div', class_='fulldate').find_all('div')[0].get_text.strip(),
+            'time': event.find('div', class_='fulldate').find_all('div')[1].get_text.strip(),
+            'type': event.find('div', class_='media').find('div').find('div').get_text.strip(),
         })
     # проходимся по элементам
     for event in events:
