@@ -46,7 +46,7 @@ def parse_events(response):
     for event in event_items:
         events.append({
             'place': event.find('div', class_='place').get_text(strip=True),
-            'title': event.find('div', class_='title').get_text(strip=True),
+            'title': event.find_all('div', class_='title'),
             'date': event.find('div', class_='fulldate').find_all('div')[0].get_text(strip=True),
             'time': event.find('div', class_='fulldate').find_all('div')[1].get_text(strip=True),
             'type': event.find('div', class_='media').find('div').div.get_text(strip=True),
