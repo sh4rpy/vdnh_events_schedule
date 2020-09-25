@@ -66,7 +66,7 @@ def parse_events(response):
             # и добавляем элемент в ответ
             answer += f'<b>Площадка:</b>\n{event["place"]}\n' \
                       f'<b>Описание:</b>\n{event["type"]}. ' \
-                      f'<a href="{EDUCATION_PROGRAM_HOST + event["link"]["href"]}">{event["title"]}</a>\n' \
+                      f'<a href="{EDUCATION_PROGRAM_HOST + event["title"]["href"]}">{event["title"]}</a>\n' \
                       f'<b>Дата:</b>\n{event["date"]}\n' \
                       f'<b>Время начала:</b>\n{event["time"]}\n\n'
     return answer
