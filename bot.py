@@ -12,8 +12,8 @@ from telebot.apihelper import ApiTelegramException
 load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 bot = telebot.TeleBot(TELEGRAM_TOKEN, parse_mode=None)
-EDUCATION_PROGRAM_HOST = 'http://znanie.vdnh.ru'
-EDUCATION_PROGRAM_URL = 'http://znanie.vdnh.ru/?dates={}'
+EDUCATION_PROGRAM_URL = 'http://znanie.vdnh.ru'
+# EDUCATION_PROGRAM_URL = 'http://znanie.vdnh.ru/?dates={}'
 RE_DATE = r'^20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])$'
 RE_DATES_RANGE = r'^20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])-' \
                  r'20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])$'
@@ -21,9 +21,10 @@ RE_DATES_RANGE = r'^20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])-
 
 def get_html(date):
     """Возвращает контент html-страницы с get-параметром dates"""
-    url = EDUCATION_PROGRAM_URL.format(date)
+    params = {'dates': date}
+    # url = EDUCATION_PROGRAM_URL.format(date)
     try:
-        response = requests.get(url, timeout=30)
+        response = requests.get(EDUCATION_PROGRAM_URL, params=params, timeout=30)
         # лог для Heroku
         print('The response is received successfully')
         return response.content
@@ -61,11 +62,10 @@ def parse_events(response):
                 'Летний кинотеатр-лекторий',
                 'Крыша павильона «Рабочий и колхозница»'
         ):
-            print(dir(event['title']))
             # и добавляем элемент в ответ
             answer += f'<b>Площадка:</b>\n{event["place"]}\n' \
                       f'<b>Описание:</b>\n{event["type"]}. ' \
-                      f'<a style="color: #fff" href="{EDUCATION_PROGRAM_HOST + event["title"]["href"]}">{event["title"]}</a>\n' \
+                      f'<a href="http://znanie.vdnh.ru + {event["title"]["href"]}">{event["title"]}</a>\n' \
                       f'<b>Дата:</b>\n{event["date"]}\n' \
                       f'<b>Время начала:</b>\n{event["time"]}\n\n'
     return answer
