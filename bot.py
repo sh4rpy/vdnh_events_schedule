@@ -12,6 +12,7 @@ from telebot.apihelper import ApiTelegramException
 load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 bot = telebot.TeleBot(TELEGRAM_TOKEN, parse_mode=None)
+HOST = 'http://znanie.vdnh.ru'
 EDUCATION_PROGRAM_URL = 'http://znanie.vdnh.ru/?dates={}'
 RE_DATE = r'^20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])$'
 RE_DATES_RANGE = r'^20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])-' \
@@ -47,6 +48,7 @@ def parse_events(response):
         events.append({
             'place': event.find('div', class_='place').get_text(strip=True),
             'title': event.find('div', class_='title').get_text(strip=True),
+            'link': event.find('div', class_='title').find('a', href=True),
             'date': event.find('div', class_='date').get_text(strip=True),
             'time': event.find('div', class_='time').get_text(strip=True),
             'type': event.find('div', class_='event_type').get_text(strip=True),
@@ -62,7 +64,7 @@ def parse_events(response):
         ):
             # и добавляем элемент в ответ
             answer += f'<b>Площадка:</b>\n{event["place"]}\n' \
-                      f'<b>Описание:</b>\n{event["type"]}. {event["title"]}\n' \
+                      f'<b>Описание:</b>\n{event["type"]}. <a href="{HOST + event["link"]["href"]}">{event["title"]}</a\n' \
                       f'<b>Дата:</b>\n{event["date"]}\n' \
                       f'<b>Время начала:</b>\n{event["time"]}\n\n'
     return answer
