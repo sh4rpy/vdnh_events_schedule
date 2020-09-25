@@ -20,9 +20,8 @@ RE_DATES_RANGE = r'^20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])-
 
 def get_html(date):
     """Возвращает контент html-страницы с get-параметром dates"""
-    params = {'dates': date}
     try:
-        response = requests.get(EDUCATION_PROGRAM_URL, params=params, timeout=30)
+        response = requests.get(EDUCATION_PROGRAM_URL, params={'dates': date}, timeout=30)
         # лог для Heroku
         print('The response is received successfully')
         return response.content
