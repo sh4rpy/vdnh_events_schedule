@@ -48,7 +48,6 @@ def parse_events(response):
         events.append({
             'place': event.find('div', class_='place').get_text(strip=True),
             'title': event.find('div', class_='title').find('a', href=True),
-            'link': event.find('div', class_='title').find('a', href=True),
             'date': event.find('div', class_='date').get_text(strip=True),
             'time': event.find('div', class_='time').get_text(strip=True),
             'type': event.find('div', class_='event_type').get_text(strip=True),
@@ -66,7 +65,7 @@ def parse_events(response):
             # и добавляем элемент в ответ
             answer += f'<b>Площадка:</b>\n{event["place"]}\n' \
                       f'<b>Описание:</b>\n{event["type"]}. ' \
-                      f'<a href="{EDUCATION_PROGRAM_HOST + event["title"]["href"]}">{event["title"]}</a>\n' \
+                      f'<a style="color: #fff" href="{EDUCATION_PROGRAM_HOST + event["title"]["href"]}">{event["title"]}</a>\n' \
                       f'<b>Дата:</b>\n{event["date"]}\n' \
                       f'<b>Время начала:</b>\n{event["time"]}\n\n'
     return answer
