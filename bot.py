@@ -13,7 +13,6 @@ load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 bot = telebot.TeleBot(TELEGRAM_TOKEN, parse_mode=None)
 EDUCATION_PROGRAM_URL = 'http://znanie.vdnh.ru'
-# EDUCATION_PROGRAM_URL = 'http://znanie.vdnh.ru/?dates={}'
 RE_DATE = r'^20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])$'
 RE_DATES_RANGE = r'^20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])-' \
                  r'20[0-2][0-9].((0[1-9])|(1[0-2])).(0[1-9]|[1-2][0-9]|3[0-1])$'
@@ -30,7 +29,7 @@ def get_html(date):
         return response.content
     except requests.Timeout:
         # лог для Heroku
-        print('TIMEOUT ERROR')
+        print('Timeout error')
     except requests.RequestException:
         # лог для Heroku
         print(f'The request failed')
