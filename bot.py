@@ -33,7 +33,7 @@ def get_html(date):
         print('TIMEOUT ERROR')
     except requests.RequestException:
         # лог для Heroku
-        print(f'The request failed at the address: {url}')
+        print(f'The request failed')
     # возвращаем дефолтное валидное значение при неудавшемся запросе
     return b''
 
@@ -56,7 +56,7 @@ def parse_events(response):
     # проходимся по элементам
     for event in events:
         # делаем проверку на площадку, так как не все нас интересуют
-        if event['place'].strip() in (
+        if event['place'] in (
                 'Дом ремесел (павильон №47)',
                 'Павильон «Рабочий и колхозница»',
                 'Летний кинотеатр-лекторий',
@@ -65,7 +65,7 @@ def parse_events(response):
             # и добавляем элемент в ответ
             answer += f'<b>Площадка:</b>\n{event["place"]}\n' \
                       f'<b>Описание:</b>\n{event["type"]}. ' \
-                      f'<a href="http://znanie.vdnh.ru + {event["title"]["href"]}">{event["title"]}</a>\n' \
+                      f'<a href="{EDUCATION_PROGRAM_URL + event["title"]["href"]}">{event["title"]}</a>\n' \
                       f'<b>Дата:</b>\n{event["date"]}\n' \
                       f'<b>Время начала:</b>\n{event["time"]}\n\n'
     return answer
