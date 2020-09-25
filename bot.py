@@ -62,7 +62,7 @@ def parse_events(response):
                 'Летний кинотеатр-лекторий',
                 'Крыша павильона «Рабочий и колхозница»'
         ):
-            print(event['title'])
+            print(dir(event['title']))
             # и добавляем элемент в ответ
             answer += f'<b>Площадка:</b>\n{event["place"]}\n' \
                       f'<b>Описание:</b>\n{event["type"]}. ' \
